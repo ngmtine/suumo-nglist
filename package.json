@@ -1,0 +1,9 @@
+{
+    "name": "suumo-nglist",
+    "scripts": {
+        "format": "biome check --write"
+    },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.6"
+  }
+}
