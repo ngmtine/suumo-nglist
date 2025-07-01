@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const mainJsPath = path.join(__dirname, "main.js");
-const outputHtmlPath = path.join(__dirname, "bookmarklet.html");
+const outputHtmlPath = path.join(__dirname, "index.html");
 
 try {
     const mainJsContent = fs.readFileSync(mainJsPath, "utf8");
@@ -15,7 +15,7 @@ try {
   <meta charset="UTF-8">
   <title>SUUMO NGリスト ブックマークレット</title>
   <style>
-    body { font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; padding: 2em; line-height: 1.8; color: #333; }
+    body { padding: 0px; margin: 0px; font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; padding: 2em; line-height: 1.8; color: #333; }
     .container { max-width: 800px; margin: 0 auto; }
     h1 { border-bottom: 2px solid #ff7600; padding-bottom: 10px; }
     a.bookmarklet {
@@ -37,7 +37,7 @@ try {
     .instructions ul { list-style: none; padding-left: 0; }
     .instructions li { background: #f9f9f9; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
     .instructions code { background: #eee; padding: 2px 5px; border-radius: 3px; }
-    .caution { margin-top: 2em; padding: 15px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 5px; }
+    .caution { padding: 15px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 5px; }
   </style>
 </head>
 <body>
@@ -76,7 +76,7 @@ try {
     fs.writeFileSync(outputHtmlPath, htmlContent);
 
     console.log(`ブックマークレットのHTMLファイルを作成しました: ${outputHtmlPath}`);
-    console.log("ターミナルで `node build.js` を実行してから、`bookmarklet.html` をブラウザで開いてください。");
+    console.log("ターミナルで `node build.js` を実行してから、`index.html` をブラウザで開いてください。");
 } catch (error) {
     console.error("エラーが発生しました:", error.message);
 }

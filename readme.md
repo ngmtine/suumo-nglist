@@ -1,3 +1,7 @@
+https://ngmtine.github.io/suumo-nglist/
+
+---
+
 以下の機能を持つブックマークレットを作成します
 
 対象はsuumoという物件検索サイト
