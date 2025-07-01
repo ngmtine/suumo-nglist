@@ -149,6 +149,49 @@ function setupCassetteItem(item) {
 }
 
 /**
+ * NGリストを全件リセットするボタンをページに追加します。
+ */
+function addClearAllButton() {
+    const buttonId = 'clear-ng-list-button';
+    if (document.getElementById(buttonId)) return; // 既にボタンがあれば何もしない
+
+    const clearButton = document.createElement('button');
+    clearButton.id = buttonId;
+    clearButton.textContent = 'NGリストを全件リセット';
+    clearButton.style.cssText = `
+        padding: 8px 12px;
+        font-size: 14px;
+        color: white;
+        background-color: #f0ad4e;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 20px;
+    `;
+
+    clearButton.onclick = () => {
+        const ngList = getNgList();
+        if (ngList.length === 0) {
+            alert('NGリストは空です。');
+            return;
+        }
+        if (confirm(`現在 ${ngList.length} 件の物件がNG登録されています。
+すべてリセットしますか？`)) {
+            localStorage.removeItem(NG_LIST_KEY);
+            alert('NGリストをリセットしました。ページを再読み込みします。');
+            location.reload();
+        }
+    };
+
+    // 「まとめて問い合わせ」の隣にボタンを配置
+    const targetContainer = document.querySelector('.inquiry_item');
+    if (targetContainer) {
+        targetContainer.appendChild(clearButton);
+    }
+}
+
+
+/**
  * ページ上の全物件を初期化・更新します。
  */
 function initialize() {
@@ -182,4 +225,6 @@ function observeDOMChanges() {
 // --- メイン処理の実行 ---
 injectStyles();
 initialize();
+addClearAllButton();
 observeDOMChanges();
+
