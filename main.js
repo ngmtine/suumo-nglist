@@ -1,13 +1,11 @@
-'use strict';
-
-const NG_LIST_KEY = 'suumoNgList';
+const NG_LIST_KEY = "suumoNgList";
 
 /**
  * スタイルをページに注入します。
  * NG物件の見た目やホバー時の動作を制御します。
  */
 function injectStyles() {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
         /* NG物件の親li要素に付与 */
         .ng-item-hidden .cassetteitem_content-body,
@@ -82,7 +80,7 @@ function addNgId(bukkenId) {
  */
 function removeNgId(bukkenId) {
     let ngList = getNgList();
-    ngList = ngList.filter(id => id !== bukkenId);
+    ngList = ngList.filter((id) => id !== bukkenId);
     localStorage.setItem(NG_LIST_KEY, JSON.stringify(ngList));
 }
 
@@ -91,58 +89,57 @@ function removeNgId(bukkenId) {
  * @param {HTMLElement} item - cassetteitem要素
  */
 function setupCassetteItem(item) {
-    const clipkeyInput = item.querySelector('input.js-clipkey');
+    const clipkeyInput = item.querySelector("input.js-clipkey");
     if (!clipkeyInput) return;
     const bukkenId = clipkeyInput.value;
 
     // 既存のコントロールを削除して再描画に備える
-    let controlContainer = item.querySelector('.ng-controls');
+    let controlContainer = item.querySelector(".ng-controls");
     if (controlContainer) {
         controlContainer.remove();
     }
 
     // ボタンを格納するコンテナを作成
-    controlContainer = document.createElement('div');
-    controlContainer.className = 'ng-controls';
+    controlContainer = document.createElement("div");
+    controlContainer.className = "ng-controls";
 
-    const parentLi = item.closest('li');
+    const parentLi = item.closest("li");
     const isNg = getNgList().includes(bukkenId);
 
     if (isNg) {
         // --- NG状態の物件 ---
-        if (parentLi) parentLi.classList.add('ng-item-hidden');
+        if (parentLi) parentLi.classList.add("ng-item-hidden");
 
-        const undoButton = document.createElement('button');
-        undoButton.textContent = 'NG解除';
-        undoButton.className = 'undo-ng-button';
+        const undoButton = document.createElement("button");
+        undoButton.textContent = "NG解除";
+        undoButton.className = "undo-ng-button";
         undoButton.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
             removeNgId(bukkenId);
-            if (parentLi) parentLi.classList.remove('ng-item-hidden');
+            if (parentLi) parentLi.classList.remove("ng-item-hidden");
             setupCassetteItem(item); // ボタンの状態を再描画
         };
         controlContainer.appendChild(undoButton);
-
     } else {
         // --- 通常状態の物件 ---
-        if (parentLi) parentLi.classList.remove('ng-item-hidden');
+        if (parentLi) parentLi.classList.remove("ng-item-hidden");
 
-        const ngButton = document.createElement('button');
-        ngButton.textContent = 'NG';
-        ngButton.className = 'ng-button';
+        const ngButton = document.createElement("button");
+        ngButton.textContent = "NG";
+        ngButton.className = "ng-button";
         ngButton.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
             addNgId(bukkenId);
-            if (parentLi) parentLi.classList.add('ng-item-hidden');
+            if (parentLi) parentLi.classList.add("ng-item-hidden");
             setupCassetteItem(item); // ボタンの状態を再描画
         };
         controlContainer.appendChild(ngButton);
     }
 
     // 物件タイトルの隣にNGコントロールを配置
-    const titleContainer = item.querySelector('.cassetteitem_content-title');
+    const titleContainer = item.querySelector(".cassetteitem_content-title");
     if (titleContainer) {
         titleContainer.appendChild(controlContainer);
     }
@@ -152,12 +149,12 @@ function setupCassetteItem(item) {
  * NGリストを全件リセットするボタンをページに追加します。
  */
 function addClearAllButton() {
-    const buttonId = 'clear-ng-list-button';
+    const buttonId = "clear-ng-list-button";
     if (document.getElementById(buttonId)) return; // 既にボタンがあれば何もしない
 
-    const clearButton = document.createElement('button');
+    const clearButton = document.createElement("button");
     clearButton.id = buttonId;
-    clearButton.textContent = 'NGリストを全件リセット';
+    clearButton.textContent = "NGリストを全件リセット";
     clearButton.style.cssText = `
         padding: 8px 12px;
         font-size: 14px;
@@ -172,32 +169,33 @@ function addClearAllButton() {
     clearButton.onclick = () => {
         const ngList = getNgList();
         if (ngList.length === 0) {
-            alert('NGリストは空です。');
+            alert("NGリストは空です。");
             return;
         }
-        if (confirm(`現在 ${ngList.length} 件の物件がNG登録されています。
-すべてリセットしますか？`)) {
+        if (
+            confirm(`現在 ${ngList.length} 件の物件がNG登録されています。
+すべてリセットしますか？`)
+        ) {
             localStorage.removeItem(NG_LIST_KEY);
-            alert('NGリストをリセットしました。ページを再読み込みします。');
+            alert("NGリストをリセットしました。ページを再読み込みします。");
             location.reload();
         }
     };
 
     // 「まとめて問い合わせ」の隣にボタンを配置
-    const targetContainer = document.querySelector('.inquiry_item');
+    const targetContainer = document.querySelector(".inquiry_item");
     if (targetContainer) {
         targetContainer.appendChild(clearButton);
     }
 }
 
-
 /**
  * ページ上の全物件を初期化・更新します。
  */
 function initialize() {
-    document.querySelectorAll('.cassetteitem').forEach(item => {
+    document.querySelectorAll(".cassetteitem").forEach((item) => {
         // まだ処理されていない物件のみを対象
-        if (!item.querySelector('.ng-controls')) {
+        if (!item.querySelector(".ng-controls")) {
             setupCassetteItem(item);
         }
     });
@@ -213,11 +211,11 @@ function observeDOMChanges() {
         initialize();
     });
 
-    const bukkenList = document.getElementById('js-bukkenList');
+    const bukkenList = document.getElementById("js-bukkenList");
     if (bukkenList) {
         observer.observe(bukkenList, {
             childList: true,
-            subtree: true
+            subtree: true,
         });
     }
 }
@@ -227,4 +225,3 @@ injectStyles();
 initialize();
 addClearAllButton();
 observeDOMChanges();
-
