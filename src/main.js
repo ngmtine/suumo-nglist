@@ -1,94 +1,96 @@
 const NG_LIST_KEY = "suumoNgList";
 
+const style = `
+/* NG物件の親li要素に付与 */
+.ng-item-hidden .cassetteitem_content-body,
+.ng-item-hidden .cassetteitem-item {
+    display: none; /* 詳細とテーブルを非表示 */
+}
+/* ホバー時に詳細とテーブルを再表示 */
+.ng-item-hidden:hover .cassetteitem_content-body,
+.ng-item-hidden:hover .cassetteitem-item {
+    display: revert;
+}
+.ng-item-hidden .cassetteitem-detail {
+    border-bottom: none;
+}
+.ng-item-hidden .cassetteitem_content-title {
+    text-decoration: line-through; /* タイトルに打ち消し線 */
+    color: #999;
+}
+.ng-item-hidden .cassetteitem-detail-object {
+    opacity: 0.3;
+}
+.ng-item-hidden:hover .cassetteitem-detail-object {
+    opacity: 1;
+}
+.ng-controls {
+    display: inline-block; /* ボタンを横並びにするため */
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.ng-controls button {
+    padding: 3px 8px;
+    font-size: 11px;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
+}
+.ng-button {
+    background-color: #d9534f; /* 赤色 */
+}
+.undo-ng-button {
+    background-color: #5bc0de; /* 水色 */
+}
+`;
+
 /**
  * スタイルをページに注入します。
  * NG物件の見た目やホバー時の動作を制御します。
  */
-function injectStyles() {
-    const style = document.createElement("style");
-    style.textContent = `
-        /* NG物件の親li要素に付与 */
-        .ng-item-hidden .cassetteitem_content-body,
-        .ng-item-hidden .cassetteitem-item {
-            display: none; /* 詳細とテーブルを非表示 */
-        }
-        /* ホバー時に詳細とテーブルを再表示 */
-        .ng-item-hidden:hover .cassetteitem_content-body,
-        .ng-item-hidden:hover .cassetteitem-item {
-            display: revert;
-        }
-        .ng-item-hidden .cassetteitem-detail {
-            border-bottom: none;
-        }
-        .ng-item-hidden .cassetteitem_content-title {
-            text-decoration: line-through; /* タイトルに打ち消し線 */
-            color: #999;
-        }
-        .ng-item-hidden .cassetteitem-detail-object {
-            opacity: 0.3;
-        }
-        .ng-item-hidden:hover .cassetteitem-detail-object {
-            opacity: 1;
-        }
-        .ng-controls {
-            display: inline-block; /* ボタンを横並びにするため */
-            margin-left: 15px;
-            vertical-align: middle;
-        }
-        .ng-controls button {
-            padding: 3px 8px;
-            font-size: 11px;
-            color: white;
-            border-radius: 3px;
-            cursor: pointer;
-            border: none;
-        }
-        .ng-button {
-            background-color: #d9534f; /* 赤色 */
-        }
-        .undo-ng-button {
-            background-color: #5bc0de; /* 水色 */
-        }
-    `;
-    document.head.appendChild(style);
-}
+const injectStyles = () => {
+    const styleElm = document.createElement("style");
+    styleElm.textContent = style;
+    document.head.appendChild(styleElm);
+};
 
 /**
  * localStorageからNG物件IDのリストを取得します。
  * @returns {string[]} NG物件IDの配列
  */
-function getNgList() {
+const getNgList = () => {
     const list = localStorage.getItem(NG_LIST_KEY);
     return list ? JSON.parse(list) : [];
-}
+};
 
 /**
  * NGリストに物件IDを追加し、localStorageに保存します。
  * @param {string} bukkenId - NGリストに追加する物件ID
  */
-function addNgId(bukkenId) {
+const addNgId = (bukkenId) => {
     const ngList = getNgList();
     if (!ngList.includes(bukkenId)) {
         ngList.push(bukkenId);
         localStorage.setItem(NG_LIST_KEY, JSON.stringify(ngList));
     }
-}
+};
 
 /**
  * NGリストから物件IDを削除し、localStorageに保存します。
  * @param {string} bukkenId - NGリストから削除する物件ID
  */
-function removeNgId(bukkenId) {
+const removeNgId = (bukkenId) => {
     let ngList = getNgList();
     ngList = ngList.filter((id) => id !== bukkenId);
     localStorage.setItem(NG_LIST_KEY, JSON.stringify(ngList));
-}
+};
 
 /**
  * 各物件の状態（NG/通常）に応じて、ボタンの表示とスタイルを更新します。
  * @param {HTMLElement} item - cassetteitem要素
  */
-function setupCassetteItem(item) {
+const setupCassetteItem = (item) => {
     const clipkeyInput = item.querySelector("input.js-clipkey");
     if (!clipkeyInput) return;
     const bukkenId = clipkeyInput.value;
@@ -107,7 +109,7 @@ function setupCassetteItem(item) {
     const isNg = getNgList().includes(bukkenId);
 
     if (isNg) {
-        // --- NG状態の物件 ---
+        // NG状態の物件
         if (parentLi) parentLi.classList.add("ng-item-hidden");
 
         const undoButton = document.createElement("button");
@@ -122,7 +124,7 @@ function setupCassetteItem(item) {
         };
         controlContainer.appendChild(undoButton);
     } else {
-        // --- 通常状態の物件 ---
+        // 通常状態の物件
         if (parentLi) parentLi.classList.remove("ng-item-hidden");
 
         const ngButton = document.createElement("button");
@@ -143,12 +145,12 @@ function setupCassetteItem(item) {
     if (titleContainer) {
         titleContainer.appendChild(controlContainer);
     }
-}
+};
 
 /**
  * NGリストを全件リセットするボタンをページに追加します。
  */
-function addClearAllButton() {
+const addClearAllButton = () => {
     const buttonId = "clear-ng-list-button";
     if (document.getElementById(buttonId)) return; // 既にボタンがあれば何もしない
 
@@ -187,25 +189,25 @@ function addClearAllButton() {
     if (targetContainer) {
         targetContainer.appendChild(clearButton);
     }
-}
+};
 
 /**
  * ページ上の全物件を初期化・更新します。
  */
-function initialize() {
+const initialize = () => {
     document.querySelectorAll(".cassetteitem").forEach((item) => {
         // まだ処理されていない物件のみを対象
         if (!item.querySelector(".ng-controls")) {
             setupCassetteItem(item);
         }
     });
-}
+};
 
 /**
  * ページが動的に更新されるのを監視し、更新のたびに処理を実行します。
  */
-function observeDOMChanges() {
-    const observer = new MutationObserver((mutations) => {
+const observeDOMChanges = () => {
+    const observer = new MutationObserver(() => {
         // DOMの変更があるたびに初期化処理を実行
         // 新しく読み込まれた物件にも対応
         initialize();
@@ -218,7 +220,7 @@ function observeDOMChanges() {
             subtree: true,
         });
     }
-}
+};
 
 // --- メイン処理の実行 ---
 injectStyles();
