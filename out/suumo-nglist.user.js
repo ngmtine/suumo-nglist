@@ -4,7 +4,7 @@
 // @version     0.2.0
 // @description SUUMOの物件一覧ページにNG機能を追加します
 // @author      ngmtine
-// @match       https://suumo.jp/chintai/*
+// @match       https://suumo.jp/jj/chintai/*
 // @grant       none
 // @license     MIT
 // ==/UserScript==

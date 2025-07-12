@@ -16,7 +16,7 @@ const userscriptHeader = `// ==UserScript==
 // @version     ${packageJson.version}
 // @description SUUMOの物件一覧ページにNG機能を追加します
 // @author      ${packageJson.author}
-// @match       https://suumo.jp/chintai/*
+// @match       https://suumo.jp/jj/chintai/*
 // @grant       none
 // @license     MIT
 // ==/UserScript==
