@@ -1,5 +1,7 @@
 {
     "name": "suumo-nglist",
+    "author": "ngmtine",
+    "version": "0.2.0",
     "type": "module",
     "scripts": {
         "format": "biome check --write",

@@ -25,6 +25,9 @@
         "enabled": true,
         "rules": {
             "recommended": true,
+            "suspicious": {
+                "noConfusingLabels": "off"
+            },
             "style": {
                 "noParameterAssign": "error",
                 "useAsConstAssertion": "error",

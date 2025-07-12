@@ -13,10 +13,10 @@ const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
 const userscriptHeader = `// ==UserScript==
 // @name        ${packageJson.name}
 // @namespace   http://tampermonkey.net/
-// @version     0.1.0
-// @description SUUMOの物件一覧ページにNG機能を追加します。
-// @author      ${packageJson.author || ""}
-// @match       https://suumo.jp/jj/chintai/ichiran/*
+// @version     ${packageJson.version}
+// @description SUUMOの物件一覧ページにNG機能を追加します
+// @author      ${packageJson.author}
+// @match       https://suumo.jp/chintai/*
 // @grant       none
 // @license     MIT
 // ==/UserScript==

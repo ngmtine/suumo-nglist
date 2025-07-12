@@ -1,0 +1,86 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family:
+        "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+        Meiryo, sans-serif;
+    line-height: 1.8;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 4em;
+}
+
+h1 {
+    border-bottom: 2px solid #ff7600;
+    padding-bottom: 10px;
+}
+
+#app-version {
+    font-size: 0.6em;
+    font-weight: normal;
+    color: #666;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+h2 {
+    border-left: 5px solid #ff7600;
+    padding-left: 10px;
+}
+
+a.button-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #ff7600;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+a.button-link:hover {
+    background-color: #e66a00;
+}
+
+a.bookmarklet {
+    cursor: move;
+}
+
+.instructions {
+    margin-top: 2em;
+}
+
+.instructions ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.instructions li {
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.instructions code {
+    background: #eee;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.caution {
+    margin-top: 2em;
+    padding: 15px;
+    background: #fffbe6;
+    border: 1px solid #ffe58f;
+    border-radius: 5px;
+}

@@ -1,4 +1,3 @@
-// biome-ignore lint/suspicious/noConfusingLabels: 無視
 javascript: (() => {
     const NG_LIST_KEY = "suumoNgList";
 
@@ -176,10 +175,9 @@ javascript: (() => {
                 alert("NGリストは空です。");
                 return;
             }
-            if (
-                confirm(`現在 ${ngList.length} 件の物件がNG登録されています。
-すべてリセットしますか？`)
-            ) {
+            const msg = `現在 ${ngList.length} 件の物件がNG登録されています。
+すべてリセットしますか？`;
+            if (confirm(msg)) {
                 localStorage.removeItem(NG_LIST_KEY);
                 alert("NGリストをリセットしました。ページを再読み込みします。");
                 location.reload();

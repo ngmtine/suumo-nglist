@@ -2,37 +2,13 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SUUMO NGリスト</title>
-  <style>
-    body { padding: 0; margin: 0; font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif; padding: 2em; line-height: 1.8; color: #333; }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 { border-bottom: 2px solid #ff7600; padding-bottom: 10px; }
-    h2 { border-left: 5px solid #ff7600; padding-left: 10px; }
-    a.button-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #ff7600;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 1.3em;
-      font-weight: bold;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: background-color 0.3s;
-    }
-    a.button-link:hover { background-color: #e66a00; }
-    a.bookmarklet { cursor: move; }
-    .instructions { margin-top: 2em; }
-    .instructions ul { list-style: none; padding-left: 0; }
-    .instructions li { background: #f9f9f9; border: 1px solid #eee; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-    .instructions code { background: #eee; padding: 2px 5px; border-radius: 3px; }
-    .caution { margin-top: 2em; padding: 15px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 5px; }
-  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <div class="container">
-    <h1>SUUMO NGリスト</h1>
+    <h1>SUUMO NGリスト <span id="app-version"></span></h1>
     <p>SUUMOの物件一覧ページで、不要な物件を非表示にするためのツールです。<br>ブックマークレット、またはTampermonkeyスクリプトとして利用できます。</p>
 
     <div class="instructions">
@@ -45,7 +21,7 @@
     <div class="instructions">
       <h2>Tampermonkeyスクリプトとして使う</h2>
       <p>
-        <a href="https://www.tampermonkey.net/" target="_blank">Tampermonkey</a>
+        <a href="https://www.tampermonkey.net/" target="_blank" rel="noopener">Tampermonkey</a>
         などのユーザースクリプトマネージャーが必要です。事前にインストールしてください。
       </p>
       <p>下のボタンをクリックして、スクリプトをインストールします。</p>
@@ -60,7 +36,7 @@
           <strong>NG登録</strong><br>
           各物件のタイトル横に NG ボタンが表示されます。このボタンをクリックすると、その物件はNGリストに登録され、非表示になります。
           NG登録した物件のタイトル横には NG解除 ボタンが表示されます。これをクリックすると、その物件をNGリストから削除できます。
-          NG登録した物件は、マウ���カーソルを乗せる（ホバーする）と一時的に詳細情報を確認できます。
+          NG登録した物件は、マウスカーソルを乗せる（ホバーする）と一時的に詳細情報を確認できます。
         </li>
         <li>
           <strong>NGリストのリセット</strong><br>
@@ -74,29 +50,6 @@
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const bookmarkletLink = document.getElementById('bookmarklet-link');
-      
-      try {
-        const response = await fetch('./out/bookmarklet.js');
-        if (!response.ok) {
-          throw new Error('Bookmarklet file not found. Please run "npm run build".');
-        }
-        const text = await response.text();
-        if (bookmarkletLink) {
-          bookmarkletLink.href = text;
-        }
-      } catch (err) {
-        console.error('Failed to load bookmarklet:', err);
-        if (bookmarkletLink) {
-          bookmarkletLink.textContent = 'ビルドが必要です';
-          bookmarkletLink.href = '#';
-          bookmarkletLink.style.backgroundColor = '#d9534f';
-          bookmarkletLink.style.cursor = 'not-allowed';
-        }
-      }
-    });
-  </script>
+  <script src="index.js"></script>
 </body>
 </html>

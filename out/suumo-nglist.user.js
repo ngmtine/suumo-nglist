@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name        suumo-nglist
 // @namespace   http://tampermonkey.net/
-// @version     0.1.0
-// @description SUUMOの物件一覧ページにNG機能を追加します。
-// @author
-// @match       https://suumo.jp/jj/chintai/ichiran/*
+// @version     0.2.0
+// @description SUUMOの物件一覧ページにNG機能を追加します
+// @author      ngmtine
+// @match       https://suumo.jp/chintai/*
 // @grant       none
 // @license     MIT
 // ==/UserScript==
@@ -186,10 +186,9 @@
                 alert("NGリストは空です。");
                 return;
             }
-            if (
-                confirm(`現在 ${ngList.length} 件の物件がNG登録されています。
-すべてリセットしますか？`)
-            ) {
+            const msg = `現在 ${ngList.length} 件の物件がNG登録されています。
+すべてリセットしますか？`;
+            if (confirm(msg)) {
                 localStorage.removeItem(NG_LIST_KEY);
                 alert("NGリストをリセットしました。ページを再読み込みします。");
                 location.reload();

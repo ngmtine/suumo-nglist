@@ -19,8 +19,7 @@ if (!fs.existsSync(outputDir)) {
 const mainJsContent = fs.readFileSync(inputFile, "utf8");
 
 // 即時関数でラップし、`javascript:` スキームを追加
-const bookmarkletContent = `// biome-ignore lint/suspicious/noConfusingLabels: 無視
-javascript:(function(){${mainJsContent}})();`;
+const bookmarkletContent = `javascript:(function(){${mainJsContent}})();`;
 
 // ファイルに書き出す
 fs.writeFileSync(outputFile, bookmarkletContent);
