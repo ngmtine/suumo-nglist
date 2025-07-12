@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "serve",
+            "type": "npm",
+            "script": "serve",
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "Serving!"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Serving!",
+                    "endsPattern": ".*"
+                }
+            },
+            "presentation": {
+                "close": true
+            }
+        },
+        {
+            "label": "kill",
+            "type": "shell",
+            "command": "lsof -t -i:3000 | xargs -r kill",
+            "presentation": {
+                "reveal": "silent",
+                "close": true
+            }
+        }
+    ]
+}

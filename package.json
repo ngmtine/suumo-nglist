@@ -7,9 +7,11 @@
         "format": "biome check --write",
         "build:bookmarklet": "node src/build.bookmarklet.js",
         "build:tampermonkey": "node src/build.tampermonkey.js",
-        "build": "npm run build:bookmarklet && npm run build:tampermonkey && npm run format"
+        "build": "npm run build:bookmarklet && npm run build:tampermonkey && npm run format",
+        "serve": "serve"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.0.6"
+        "@biomejs/biome": "^2.0.6",
+        "serve": "^14.2.4"
     }
 }
