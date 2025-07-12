@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             const text = await response.text();
             if (bookmarkletLink) {
+                // text内にバッククオートが複数ある場合、エンコーディングに失敗する場合があることに注意 chrome137
                 bookmarkletLink.href = text;
             }
         } catch (err) {

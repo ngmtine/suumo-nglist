@@ -1,13 +1,13 @@
-import fs from "node:fs";
-import path, { dirname } from "node:path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // package.jsonを読み込む
-const packageJsonPath = path.join(__dirname, "..", "package.json");
-const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+const packageJsonPath = join(__dirname, "..", "package.json");
+const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8"));
 
 // Tampermonkeyのメタデータブロックを定義
 const userscriptHeader = `// ==UserScript==
@@ -22,8 +22,12 @@ const userscriptHeader = `// ==UserScript==
 // ==/UserScript==
 `;
 
-// main.jsのコードを読み込む
-const mainJsContent = fs.readFileSync(path.join(__dirname, "main.js"), "utf8");
+// main.jsとCSSファイルのコードを読み込む
+let mainJsContent = readFileSync(join(__dirname, "main.js"), "utf8");
+const mainStyleContent = readFileSync(join(__dirname, "main.css"), "utf8");
+
+// スタイルをmain.jsに埋め込む
+mainJsContent = mainJsContent.replace("__STYLE_PLACEHOLDER__", mainStyleContent.replace(/\n/g, ""));
 
 // 即時関数でラップする
 const fullScript = `${userscriptHeader}
@@ -35,15 +39,15 @@ ${mainJsContent}
 `;
 
 // 出力ディレクトリを作成
-const outputDir = path.join(__dirname, "..", "out");
-if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir);
+const outputDir = join(__dirname, "..", "out");
+if (!existsSync(outputDir)) {
+    mkdirSync(outputDir);
 }
 
 // 出力ファイルパス
-const outputFile = path.join(outputDir, "suumo-nglist.user.js");
+const outputFile = join(outputDir, "suumo-nglist.user.js");
 
 // ファイルに書き出す
-fs.writeFileSync(outputFile, fullScript);
+writeFileSync(outputFile, fullScript);
 
 console.log(`Tampermonkey script generated at: ${outputFile}`);

@@ -1,0 +1,50 @@
+.ng-item-hidden .cassetteitem_content-body,
+.ng-item-hidden .cassetteitem-item {
+    display: none;
+}
+.ng-item-hidden:hover .cassetteitem_content-body,
+.ng-item-hidden:hover .cassetteitem-item {
+    display: revert;
+}
+.ng-item-hidden .cassetteitem-detail {
+    border-bottom: none;
+}
+.ng-item-hidden .cassetteitem_content-title {
+    text-decoration: line-through;
+    color: #999;
+}
+.ng-item-hidden .cassetteitem-detail-object {
+    opacity: 0.3;
+}
+.ng-item-hidden:hover .cassetteitem-detail-object {
+    opacity: 1;
+}
+.ng-controls {
+    display: inline-block;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.ng-controls button {
+    padding: 3px 8px;
+    font-size: 11px;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    border: none;
+}
+.ng-button {
+    background-color: #d9534f;
+}
+.undo-ng-button {
+    background-color: #5bc0de;
+}
+button#clear-ng-list-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #f0ad4e;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 20px;
+}
